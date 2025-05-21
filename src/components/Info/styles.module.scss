@@ -1,0 +1,30 @@
+@import '@styles/variables.module.scss';
+@import '@styles/mixin.module.scss';
+
+.container {
+  background-color: $primary_color;
+  margin-top: -75px;
+  padding: 20px 55px;
+  @include flex_box_custom(space-around, center, 15px);
+}
+
+.containerCard {
+  @include flex_box_custom(center, center, 15px);
+  width: 280px;
+  height: 104px;
+}
+
+.containerContent {
+  @include flex_box_custom(center, flex-start, 10px);
+  flex-direction: column;
+  .des {
+    margin: 0;
+    color: $five_color;
+  }
+  .title {
+    font-weight: 400;
+    font-size: 17px;
+    color: $white_color;
+    margin: 0;
+  }
+}
