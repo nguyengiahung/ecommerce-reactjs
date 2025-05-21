@@ -9,50 +9,46 @@ import heartIcon from '@icons/svgs/heartIcon.svg';
 import reloadIcon from '@icons/svgs/reloadIcon.svg';
 
 function Header() {
-  const { containerHeader, containerBoxIcon, containerMenu, containerBox, boxIconRight } =
-    styles;
+  const {
+    containerHeader,
+    containerBoxIcon,
+    containerMenu,
+    containerBox,
+    boxIconRight,
+    container
+  } = styles;
   return (
-    <div className={containerHeader}>
-      <div className={containerBox}>
-        <div className={containerBoxIcon}>
-          {dataBoxIcon &&
-            dataBoxIcon.map((icon) => {
-              return <BoxIcon type={icon.type} href={icon.href} />;
-            })}
+    <div className={container}>
+      <div className={containerHeader}>
+        <div className={containerBox}>
+          <div className={containerBoxIcon}>
+            {dataBoxIcon &&
+              dataBoxIcon.map((icon) => {
+                return <BoxIcon type={icon.type} href={icon.href} />;
+              })}
+          </div>
+          <div className={containerMenu}>
+            {dataMenu &&
+              dataMenu.slice(0, 3).map((item) => {
+                return <Menu content={item.content} href={item.href} />;
+              })}
+          </div>
         </div>
-        <div className={containerMenu}>
-          {dataMenu &&
-            dataMenu.slice(0, 3).map((item) => {
-              return <Menu content={item.content} href={item.href} />;
-            })}
+        <div>
+          <img src={Logo} alt='' style={{ width: '153px', height: '53px' }} />
         </div>
-      </div>
-      <div>
-        <img src={Logo} alt='' style={{ width: '153px', height: '53px' }} />
-      </div>
-      <div className={containerBox}>
-        <div className={containerMenu}>
-          {dataMenu &&
-            dataMenu.slice(-3).map((item) => {
-              return <Menu content={item.content} href={item.href} />;
-            })}
-        </div>
-        <div className={containerBoxIcon}>
-          <img
-            src={reloadIcon}
-            className={boxIconRight}
-            alt=''
-          />
-          <img
-            src={heartIcon}
-            className={boxIconRight}
-            alt=''
-          />
-          <img
-            src={cartIcon}
-            className={boxIconRight}
-            alt=''
-          />
+        <div className={containerBox}>
+          <div className={containerMenu}>
+            {dataMenu &&
+              dataMenu.slice(-3).map((item) => {
+                return <Menu content={item.content} href={item.href} />;
+              })}
+          </div>
+          <div className={containerBoxIcon}>
+            <img src={reloadIcon} className={boxIconRight} alt='' />
+            <img src={heartIcon} className={boxIconRight} alt='' />
+            <img src={cartIcon} className={boxIconRight} alt='' />
+          </div>
         </div>
       </div>
     </div>
