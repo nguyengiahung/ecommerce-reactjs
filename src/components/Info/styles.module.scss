@@ -2,10 +2,11 @@
 @import '@styles/mixin.module.scss';
 
 .container {
+  @include flex_box_custom(space-around, center, 15px);
   background-color: $primary_color;
   margin-top: -75px;
   padding: 20px 55px;
-  @include flex_box_custom(space-around, center, 15px);
+  position: relative;
 }
 
 .containerCard {

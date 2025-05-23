@@ -1,0 +1,17 @@
+@import '@styles/mixin.module.scss';
+@import '@styles/variables.module.scss';
+
+.box {
+  background-color: $white_color;
+  padding: 10px;
+  @include radius_common(3px);
+  @include flex_box_custom(center, center, 5px);
+  .number {
+    color: $four_color;
+    font-size: 18px;
+  }
+  .intervalTime {
+    color: $secondary_color;
+    font-size: 18px;
+  }
+}
