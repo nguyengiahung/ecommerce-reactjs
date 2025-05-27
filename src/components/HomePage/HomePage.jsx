@@ -4,6 +4,7 @@ import Banner from '@components/Banner/Banner';
 import Product from '@components/Product/Product';
 import Info from '@components/Info/Info';
 import SaleHomePage from '@components/SaleHomePage/SaleHomePage';
+import Footer from '@components/Footer/Footer';
 
 function HomePage() {
   return (
@@ -14,6 +15,7 @@ function HomePage() {
         <Info />
         <Product />
         <SaleHomePage />
+        <Footer />
       </div>
     </div>
   );
