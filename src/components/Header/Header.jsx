@@ -8,7 +8,7 @@ import useScrollHanding from '@/hooks/useScrollHanding';
 import classNames from 'classnames';
 import { SidebarContext } from '@/contexts/SidebarProvider';
 import { CiHeart, CiShoppingCart } from 'react-icons/ci';
-import { IoIosGitCompare } from 'react-icons/io';
+import { TfiReload } from 'react-icons/tfi';
 function Header() {
   const {
     containerHeader,
@@ -22,8 +22,12 @@ function Header() {
   } = styles;
   const { scrollPosition, scrollDirection } = useScrollHanding();
   const [fixedPosition, setFixedPosition] = useState(false);
+  const { setIsOpen, setType } = useContext(SidebarContext);
+  const handleOpenSidebar = (type) => {
+    setIsOpen(true);
+    setType(type);
+  };
 
-  const { isOpen, setIsOpen } = useContext(SidebarContext);
   useEffect(() => {
     setFixedPosition(scrollPosition > 82);
   }, [scrollPosition]);
@@ -56,24 +60,27 @@ function Header() {
           <div className={containerMenu}>
             {dataMenu &&
               dataMenu.slice(-3).map((item) => {
-                return (
-                  <Menu
-                    content={item.content}
-                    href={item.href}
-                    setIsOpen={setIsOpen}
-                  />
-                );
+                return <Menu content={item.content} href={item.href} />;
               })}
           </div>
           <div className={containerBoxIcon}>
             <div>
-              <IoIosGitCompare className={IconRight} />
+              <TfiReload style={{ fontSize: '20px' }}
+                onClick={() => handleOpenSidebar('compare')}
+                className={IconRight}
+              />
             </div>
             <div>
-              <CiHeart className={IconRight} />
+              <CiHeart
+                onClick={() => handleOpenSidebar('wistList')}
+                className={IconRight}
+              />
             </div>
             <div>
-              <CiShoppingCart className={IconRight} />
+              <CiShoppingCart
+                onClick={() => handleOpenSidebar('cart')}
+                className={IconRight}
+              />
             </div>
           </div>
         </div>

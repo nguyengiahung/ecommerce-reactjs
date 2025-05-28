@@ -1,0 +1,37 @@
+@import '@styles/mixin.module.scss';
+@import '@styles/variables.module.scss';
+
+.container {
+  @include flex_box_custom(flex-start, flex-start, 30px);
+  position: relative;
+  padding: 15px;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  &:hover {
+    background-color: #f7f7f7;
+  }
+  &:hover .btnClose {
+    transform: translateX(0px);
+  }
+  margin-top: 30px;
+  img {
+    width: 70px;
+  }
+  .boxContent {
+    @include flex_box_custom(flex-start, flex-start, 10px);
+    flex-direction: column;
+    color: $third_color;
+  }
+  .btnClose {
+    position: absolute;
+    color: $third_color;
+    cursor: pointer;
+    transform: translateX(30px);
+    transition: all 0.3s ease;
+    right: 5px;
+    top: 5px;
+    svg {
+      font-size: 30px;
+    }
+  }
+}
