@@ -1,0 +1,48 @@
+@import '@styles/mixin.module.scss';
+@import '@styles/variables.module.scss';
+
+.container {
+  position: relative;
+  .overlay {
+    background-color: rgba(0, 0, 0, 0.3);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: fixed;
+    z-index: 999999;
+    transition: all 0.5s linear;
+  }
+  .sidebar {
+    position: fixed;
+    right: 0;
+    z-index: 999999999;
+    top: 0;
+    background-color: $white_color;
+    width: 350px;
+    height: 100vh;
+    transform: translateX(370px);
+    transition: all 0.2s linear;
+  }
+
+  .slideSideBar {
+    transform: translateX(0);
+  }
+  .btn_close {
+    position: absolute;
+    left: -50px;
+    top: 20px;
+    background-color: $white_color;
+    @include radius_common(50%);
+    width: 35px;
+    height: 35px;
+    font-size: 35px;
+    color: #706d6d;
+    cursor: pointer;
+    @include flex_box_custom(center, center, 0px);
+    &:hover {
+      background-color: #ccc;
+      transition: all 0.3s linear;
+    }
+  }
+}

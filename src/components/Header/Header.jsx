@@ -1,24 +1,39 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import BoxIcon from './BoxIcon/BoxIcon';
 import { dataBoxIcon, dataMenu } from './BoxIcon/constants';
 import styles from './styles.module.scss';
 import Menu from './Menu/Menu';
 import Logo from '@icons/images/LogoMenu.png';
-import cartIcon from '@icons/svgs/cartIcon.svg';
-import heartIcon from '@icons/svgs/heartIcon.svg';
-import reloadIcon from '@icons/svgs/reloadIcon.svg';
-
+import useScrollHanding from '@/hooks/useScrollHanding';
+import classNames from 'classnames';
+import { SidebarContext } from '@/contexts/SidebarProvider';
+import { CiHeart, CiShoppingCart } from 'react-icons/ci';
+import { IoIosGitCompare } from 'react-icons/io';
 function Header() {
   const {
     containerHeader,
     containerBoxIcon,
     containerMenu,
     containerBox,
-    boxIconRight,
-    container
+    IconRight,
+    containerFixed,
+    container,
+    topHeader
   } = styles;
+  const { scrollPosition, scrollDirection } = useScrollHanding();
+  const [fixedPosition, setFixedPosition] = useState(false);
+
+  const { isOpen, setIsOpen } = useContext(SidebarContext);
+  useEffect(() => {
+    setFixedPosition(scrollPosition > 82);
+  }, [scrollPosition]);
+
   return (
-    <div className={container}>
+    <div
+      className={classNames(container, topHeader, {
+        [containerFixed]: fixedPosition
+      })}
+    >
       <div className={containerHeader}>
         <div className={containerBox}>
           <div className={containerBoxIcon}>
@@ -41,13 +56,25 @@ function Header() {
           <div className={containerMenu}>
             {dataMenu &&
               dataMenu.slice(-3).map((item) => {
-                return <Menu content={item.content} href={item.href} />;
+                return (
+                  <Menu
+                    content={item.content}
+                    href={item.href}
+                    setIsOpen={setIsOpen}
+                  />
+                );
               })}
           </div>
           <div className={containerBoxIcon}>
-            <img src={reloadIcon} className={boxIconRight} alt='' />
-            <img src={heartIcon} className={boxIconRight} alt='' />
-            <img src={cartIcon} className={boxIconRight} alt='' />
+            <div>
+              <IoIosGitCompare className={IconRight} />
+            </div>
+            <div>
+              <CiHeart className={IconRight} />
+            </div>
+            <div>
+              <CiShoppingCart className={IconRight} />
+            </div>
           </div>
         </div>
       </div>

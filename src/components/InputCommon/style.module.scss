@@ -1,0 +1,29 @@
+@import '@styles/mixin.module.scss';
+@import '@styles/variables.module.scss';
+
+.container {
+  @include flex_box_custom(center, flex-start, 10px);
+  flex-direction: column;
+  width: 100%;
+  .boxInput {
+    position: relative;
+    width: 100%;
+    .Input {
+      padding: 8px;
+      outline: none;
+      width: 100%;
+      border: 1px solid #ccc;
+    }
+    .boxIcon {
+      position: absolute;
+      right: 0px;
+      top: 10px;
+      cursor: pointer;
+    }
+  }
+  .labelInput {
+    margin-top: 20px;
+    font-size: 14px;
+    color: $third_color;
+  }
+}

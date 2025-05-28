@@ -1,0 +1,30 @@
+@import '@styles/mixin.module.scss';
+@import '@styles/variables.module.scss';
+
+.container {
+  padding: 30px 40px 30px 20px;
+  .labelSidebar {
+    color: $third_color;
+    font-size: 18px;
+    text-align: center;
+  }
+
+  .btnLogin {
+    width: 100% !important;
+    button {
+      width: 100% !important;
+    }
+  }
+  .lost {
+    margin-top: 20px;
+    font-size: 14px;
+    color: $third_color;
+    text-align: center;
+  }
+  .remember {
+    @include flex_box_custom(flex-start, center, 10px);
+    margin: 20px 0;
+    font-size: 14px;
+    color: $third_color;
+  }
+}
