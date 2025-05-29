@@ -10,13 +10,13 @@
     right: 0;
     bottom: 0;
     position: fixed;
-    z-index: 999999;
+    z-index: 999;
     transition: all 0.5s linear;
   }
   .sidebar {
     position: fixed;
     right: 0;
-    z-index: 999999999;
+    z-index: 1001;
     top: 0;
     background-color: $white_color;
     width: 350px;
