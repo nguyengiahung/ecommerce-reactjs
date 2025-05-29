@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './style.module.scss';
+import styles from './styles.module.scss';
 import { IoIosClose } from 'react-icons/io';
 function ItemProduct() {
   const { container, boxContent, btnClose } = styles;
@@ -11,7 +11,9 @@ function ItemProduct() {
       />
       <div className={boxContent}>
         <div>Title Product</div>
+        <div>Size: M</div>
         <div>$119.99</div>
+        <div>SKU: 0123</div>
       </div>
       <div className={btnClose}>
         <IoIosClose />
