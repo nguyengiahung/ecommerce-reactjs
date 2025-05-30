@@ -1,11 +1,13 @@
 import InputCommon from '@components/InputCommon/InputCommon';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styles from './styles.module.scss';
 import Button from '@components/Button/Button';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { ToastContext } from '@/contexts/ToastProvider';
-import { register } from '@/apis/authService';
+import { register, signIn } from '@/apis/authService';
+import Cookies from 'js-cookie';
+import { getInfo } from '@/apis/authService';
 
 function Login() {
   const { container, labelSidebar, remember, lost, btnLogin } = styles;
@@ -24,16 +26,18 @@ function Login() {
       password: Yup.string()
         .min(6, 'Password must be at least 6 characters')
         .required('Password is required!'),
-      cfmpassword: Yup.string()
-        .oneOf([Yup.ref('password'), null], 'Password must match!')
-        .required('Confirm Password is required!')
+      cfmpassword: Yup.string().oneOf(
+        [Yup.ref('password'), null],
+        'Password must match!'
+      )
+      // .required('Confirm Password is required!')
     }),
     onSubmit: async (values) => {
       if (isLoading) return;
+      const { email: username, password } = values;
+      setIsLoading(true);
 
       if (isRegister) {
-        const { email: username, password } = values;
-        setIsLoading(true);
         await register({ username, password })
           .then((res) => {
             toast.success(res.data.message);
@@ -44,8 +48,29 @@ function Login() {
             setIsLoading(false);
           });
       }
+
+      if (!isRegister) {
+        await signIn({ username, password })
+          .then((res) => {
+            console.log(res);
+            const { id, token, refreshToken } = res.data;
+            setIsLoading(false);
+
+            Cookies.set('token', token);
+            Cookies.set('refreshToken', refreshToken);
+            Cookies.set('id', id);
+          })
+          .catch((err) => {
+            console.log(err);
+            setIsLoading(false);
+          });
+      }
     }
   });
+
+  useEffect(() => {
+    getInfo();
+  }, []);
 
   const handleToggle = () => {
     setIsRegister(!isRegister);
@@ -55,7 +80,7 @@ function Login() {
   return (
     <div className={container}>
       <div className={labelSidebar}>{isRegister ? 'SIGN UP' : 'SIGN IN'}</div>
-      <form action='' onSubmit={formik.handleSubmit}>
+      <form onSubmit={formik.handleSubmit}>
         <InputCommon
           id='email'
           label={'Username or email'}
@@ -92,7 +117,6 @@ function Login() {
               isLoading ? 'LOADING...' : isRegister ? 'REGISTER' : 'LOGIN'
             }
             type='submit'
-            // onClick={() => toast.success('Success123')}
           />
           <Button
             type='button'
