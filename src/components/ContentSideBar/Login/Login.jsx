@@ -8,12 +8,16 @@ import { ToastContext } from '@/contexts/ToastProvider';
 import { register, signIn } from '@/apis/authService';
 import Cookies from 'js-cookie';
 import { getInfo } from '@/apis/authService';
+import { SidebarContext } from '@/contexts/SidebarProvider';
+import { StoreContext } from '@/contexts/storeProvider';
 
 function Login() {
   const { container, labelSidebar, remember, lost, btnLogin } = styles;
   const [isRegister, setIsRegister] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useContext(ToastContext);
+  const { setIsOpen } = useContext(SidebarContext);
+  const { setUserId } = useContext(StoreContext);
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -53,12 +57,14 @@ function Login() {
         await signIn({ username, password })
           .then((res) => {
             console.log(res);
-            const { id, token, refreshToken } = res.data;
             setIsLoading(false);
-
+            const { id, token, refreshToken } = res.data;
+            setUserId(id);
             Cookies.set('token', token);
             Cookies.set('refreshToken', refreshToken);
             Cookies.set('id', id);
+            toast.success('Sign in successfully!');
+            setIsOpen(false);
           })
           .catch((err) => {
             console.log(err);
@@ -67,10 +73,6 @@ function Login() {
       }
     }
   });
-
-  useEffect(() => {
-    getInfo();
-  }, []);
 
   const handleToggle = () => {
     setIsRegister(!isRegister);

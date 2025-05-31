@@ -36,13 +36,13 @@ axiosClient.interceptors.response.use(
         const res = await axiosClient.post('/refresh-token', {
           token: refreshToken
         });
+        console.log(res);
 
         const newAccessToken = res.data.accessToken;
         Cookies.set('token', newAccessToken);
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
         return axiosClient(originalRequest);
 
-        console.log(res);
       } catch (error) {
         Cookies.remove('token');
         Cookies.remove('refreshToken');
