@@ -2,18 +2,25 @@ import React, { useContext, useState } from 'react';
 import styles from '../styles.module.scss';
 import { SidebarContext } from '@/contexts/SidebarProvider';
 import { StoreContext } from '@/contexts/storeProvider';
+import { useNavigate } from 'react-router-dom';
 
 function Menu({ content, href }) {
   const { menu, subMenu } = styles;
   const { setIsOpen, setType } = useContext(SidebarContext);
   const { userInfo, handleLogout } = useContext(StoreContext);
   const [isShowSubMenu, setIsShowSubMenu] = useState(false);
+  const navigate = useNavigate();
+
   console.log(userInfo);
 
   const handleClickShowLogin = () => {
     if (content === 'Sign In' && !userInfo) {
       setIsOpen(true);
       setType('login');
+    }
+
+    if (content === 'Our Shop') {
+      navigate('/shop')
     }
   };
 
