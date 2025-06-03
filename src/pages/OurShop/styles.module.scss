@@ -50,3 +50,9 @@
     border: 1px solid #ccc;
   }
 }
+
+.containerProduct {
+  @include flex_box_custom(space-between, center, 10px);
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
