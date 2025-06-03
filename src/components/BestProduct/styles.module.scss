@@ -2,7 +2,7 @@
 @import '@styles/mixin.module.scss';
 
 .container {
-  @include flex_box_custom(space-between, center, 10px);
+  @include flex_box_custom(space-between, center, 15px);
   flex-wrap: wrap;
   margin-top: 15px;
 }

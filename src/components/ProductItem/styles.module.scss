@@ -49,12 +49,91 @@
     }
   }
 }
-.title {
-  font-size: 16px;
-  color: $four_color;
+
+.btnClear {
+  font-size: 12px;
+  text-align: center;
+  color: $primary_color;
   margin: 5px 0;
+  cursor: pointer;
 }
-.money {
-  font-size: 14px;
-  color: $third_color;
+
+.boxContent {
+  padding: 10px 0 20px;
+  .boxSize {
+    @include flex_box_custom(center, center, 5px);
+    .size {
+      @include flex_box_custom(center, center, 5px);
+      border: 1px solid #e1e1e1;
+      padding: 4px 6px;
+      font-size: 14px;
+      color: $secondary_color;
+      transition: all 0.3s linear;
+      &:hover {
+        border: 1px solid #868484;
+        cursor: pointer;
+      }
+    }
+  }
+  .isActiveSize {
+    border: 1px solid $primary_color !important;
+  }
+  .boxInfo {
+    @include flex_box_custom(center, center, 5px);
+    flex-direction: column;
+    .title {
+      font-size: 16px;
+      color: $primary_color;
+      margin: 5px 0;
+    }
+    .money,
+    .brand {
+      font-size: 14px;
+      color: $secondary_color;
+    }
+  }
+
+  .boxInfoHomePage {
+    @include flex_box_custom(center, flex-start, 0px);
+  }
+
+  .boxBtn {
+    @include flex_box_custom(center, center, 0px);
+    margin-top: 15px;
+    button {
+      font-size: 12px;
+    }
+  }
+}
+
+.boxContentHomePage {
+  padding: 0 !important;
+}
+
+.boxContentList {
+  @include flex_box_custom(flex-start, flex-start, 20px);
+  flex-direction: column;
+  .boxInfo {
+  @include flex_box_custom(flex-start, flex-start, 5px);
+
+    flex-direction: column;
+    .title {
+      font-size: 16px;
+      color: $primary_color;
+      margin: 5px 0;
+    }
+    .money,
+    .brand {
+      font-size: 14px;
+      color: $secondary_color;
+    }
+  }
+}
+
+.containerItem {
+  @include flex_box_custom(flex-start, center, 20px);
+  margin-top: 20px;
+  .largeImg {
+    width: 430px;
+  }
 }

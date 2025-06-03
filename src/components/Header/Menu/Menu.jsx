@@ -11,8 +11,6 @@ function Menu({ content, href }) {
   const [isShowSubMenu, setIsShowSubMenu] = useState(false);
   const navigate = useNavigate();
 
-  console.log(userInfo);
-
   const handleClickShowLogin = () => {
     if (content === 'Sign In' && !userInfo) {
       setIsOpen(true);
@@ -20,7 +18,7 @@ function Menu({ content, href }) {
     }
 
     if (content === 'Our Shop') {
-      navigate('/shop')
+      navigate('/shop');
     }
   };
 
