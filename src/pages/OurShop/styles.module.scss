@@ -33,3 +33,20 @@
     @include flex_box_custom(center, center, 10px);
   }
 }
+
+.containerFilter {
+  @include flex_box_custom(space-between, center, 0px);
+  margin-top: 15px;
+  .containerSort {
+    @include flex_box_custom(center, center, 15px);
+  }
+  .containerShow {
+    @include flex_box_custom(center, center, 10px);
+  }
+  .selectBox {
+    padding: 8px 14px;
+    color: $secondary_color;
+    font-size: 14px;
+    border: 1px solid #ccc;
+  }
+}
