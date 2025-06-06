@@ -18,11 +18,13 @@ function Header() {
     IconRight,
     containerFixed,
     container,
-    topHeader
+    topHeader,
+    boxCart,
+    quantity
   } = styles;
   const { scrollPosition, scrollDirection } = useScrollHanding();
   const [fixedPosition, setFixedPosition] = useState(false);
-  const { setIsOpen, setType } = useContext(SidebarContext);
+  const { setIsOpen, setType, listProductCart } = useContext(SidebarContext);
   const handleOpenSidebar = (type) => {
     setIsOpen(true);
     setType(type);
@@ -65,7 +67,8 @@ function Header() {
           </div>
           <div className={containerBoxIcon}>
             <div>
-              <TfiReload style={{ fontSize: '20px' }}
+              <TfiReload
+                style={{ fontSize: '20px' }}
                 onClick={() => handleOpenSidebar('compare')}
                 className={IconRight}
               />
@@ -76,11 +79,12 @@ function Header() {
                 className={IconRight}
               />
             </div>
-            <div>
+            <div className={boxCart}>
               <CiShoppingCart
                 onClick={() => handleOpenSidebar('cart')}
                 className={IconRight}
               />
+              <span className={quantity}>{listProductCart.length}</span>
             </div>
           </div>
         </div>

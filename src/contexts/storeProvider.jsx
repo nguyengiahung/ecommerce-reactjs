@@ -6,11 +6,11 @@ export const StoreContext = createContext();
 
 export const StoreProvider = ({ children }) => {
   const [userInfo, setUserInfo] = useState(null);
-  const [userId, setUserId] = useState(Cookies.get('id'));
+  const [userId, setUserId] = useState(Cookies.get('userId'));
 
   const handleLogout = () => {
     Cookies.remove('token');
-    Cookies.remove('id');
+    Cookies.remove('userId');
     Cookies.remove('refreshToken');
     setUserInfo(null);
     window.location.reload();

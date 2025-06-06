@@ -89,3 +89,18 @@
   top: 35px;
   @include flex_box_custom(center, center, 0px);
 }
+
+.boxCart {
+  position: relative;
+  .quantity {
+    position: absolute;
+    font-size: 12px;
+    background-color: #000;
+    color: $white_color;
+    padding: 1px 4px;
+    border-radius: 50%;
+    top: 0px;
+    right: -5px;
+    cursor: pointer;
+  }
+}
