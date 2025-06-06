@@ -24,6 +24,34 @@ export const OurShopProvider = ({ children }) => {
   const [isShowGrid, setIsShowGrid] = useState(true);
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadMore, setIsLoadMore] = useState(false); 
+  const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(0);
+
+  const handleLoadmore = () => {
+    const query = {
+      sortType: sortId,
+      page: +page + 1,
+      limit: showId
+    };
+
+    setIsLoadMore(true);
+
+    getProducts(query)
+      .then((res) => {
+        setProducts((prev) => {
+          return [...prev, ...res.contents];
+        });
+        setPage(+res.page);
+        setTotal(res.total);
+        setIsLoadMore(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setIsLoadMore(false);
+      });
+  };
+
   const values = {
     sortOptions,
     showOptions,
@@ -32,7 +60,10 @@ export const OurShopProvider = ({ children }) => {
     setIsShowGrid,
     products,
     isShowGrid,
-    isLoading
+    isLoading,
+    handleLoadmore,
+    total,
+    isLoadMore
   };
 
   useEffect(() => {
@@ -45,6 +76,7 @@ export const OurShopProvider = ({ children }) => {
     getProducts(query)
       .then((res) => {
         setProducts(res.contents);
+        setTotal(res.total);
         setIsLoading(false);
       })
       .catch((err) => {
