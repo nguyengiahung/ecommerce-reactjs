@@ -16,7 +16,7 @@ function Login() {
   const [isRegister, setIsRegister] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useContext(ToastContext);
-  const { setIsOpen } = useContext(SidebarContext);
+  const { setIsOpen, handleGetListProductsCart } = useContext(SidebarContext);
   const { setUserId } = useContext(StoreContext);
   const formik = useFormik({
     initialValues: {
@@ -65,6 +65,7 @@ function Login() {
             Cookies.set('userId', id);
             toast.success('Sign in successfully!');
             setIsOpen(false);
+            handleGetListProductsCart(id, 'cart');
           })
           .catch((err) => {
             console.log(err);
