@@ -23,7 +23,6 @@ function ItemProduct({
     setIsDelete(true);
     deleteItemCart({ userId, productId })
       .then((res) => {
-        console.log(res);
         setIsDelete(false);
         handleGetListProductsCart(userId, 'cart');
         toast.success('Delete item successfully!');
