@@ -3,6 +3,7 @@ import styles from '../../styles.module.scss';
 import { CiTrash } from 'react-icons/ci';
 import img from '../../../../assets/icons/images/banner.jpeg';
 import SelectBox from '@/pages/OurShop/components/SelectBox';
+import Button from '@components/Button/Button';
 
 function CartTable() {
   const cartItems = [
@@ -44,48 +45,82 @@ function CartTable() {
   const getValueSelect = (value, type) => {
     console.log('123');
   };
-  const { cartTable, deleteBtn, priceItem, skuItem, totalItem } = styles;
+  const {
+    cartTable,
+    deleteBtn,
+    priceItem,
+    skuItem,
+    totalItem,
+    boxCoupon,
+    inputCoupon,
+    clearBtn,
+    clearTrash,contentTrashBtn
+  } = styles;
   return (
-    <table className={cartTable}>
-      <thead>
-        <tr>
-          <th>PRODUCT</th>
-          <th></th>
-          <th>PRICE</th>
-          <th>SKU</th>
-          <th>QUANTITY</th>
-          <th>SUBTOTAL</th>
-        </tr>
-      </thead>
-      <tbody>
-        {cartItems.map((item) => (
-          <tr key={item.id}>
-            <td className={styles.productCell}>
-              <img src={img} alt={item.name} className={styles.productImage} />
-              <div>
-                <div className={styles.productName}>{item.name}</div>
-                <div className={styles.productSize}>Size: {item.size}</div>
-              </div>
-            </td>
-            <td>
-              <div>
-                <CiTrash className={deleteBtn} />
-              </div>
-            </td>
-            <td className={priceItem}>${item.price.toFixed(2)}</td>
-            <td className={skuItem}>{item.sku}</td>
-            <td>
-              <SelectBox
-                options={showOptions}
-                getValue={getValueSelect}
-                type='sort'
-              />
-            </td>
-            <td className={totalItem}>${item.price.toFixed(2)}</td>
+    <div style={{ display: 'flex', flexDirection: 'column' }}>
+      <table className={cartTable}>
+        <thead>
+          <tr>
+            <th>PRODUCT</th>
+            <th></th>
+            <th>PRICE</th>
+            <th>SKU</th>
+            <th>QUANTITY</th>
+            <th>SUBTOTAL</th>
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {cartItems.map((item) => (
+            <tr key={item.id}>
+              <td className={styles.productCell}>
+                <img
+                  src={img}
+                  alt={item.name}
+                  className={styles.productImage}
+                />
+                <div>
+                  <div className={styles.productName}>{item.name}</div>
+                  <div className={styles.productSize}>Size: {item.size}</div>
+                </div>
+              </td>
+              <td>
+                <div>
+                  <CiTrash className={deleteBtn} />
+                </div>
+              </td>
+              <td className={priceItem}>${item.price.toFixed(2)}</td>
+              <td className={skuItem}>{item.sku}</td>
+              <td>
+                <SelectBox
+                  options={showOptions}
+                  getValue={getValueSelect}
+                  type='sort'
+                />
+              </td>
+              <td className={totalItem}>${item.price.toFixed(2)}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <div className={boxCoupon}>
+        <div className={inputCoupon}>
+          <input type='text' placeholder='Coupon Code' />
+          <Button content={'OK'} isPrimary={false} />
+        </div>
+        <div className={clearBtn}>
+          {/* <CiTrash className={clearTrash} /> */}
+          <Button
+            content={
+              <div className={contentTrashBtn}>
+                <CiTrash className={clearTrash} />
+                CLEAR SHOPPING CART
+              </div>
+            }
+            isPrimary={false}
+          />
+        </div>
+      </div>
+    </div>
   );
 }
 

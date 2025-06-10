@@ -209,3 +209,45 @@
     }
   }
 }
+
+.boxCoupon {
+  margin-top: 15px;
+  @include flex_box_custom(space-between, center, 0px);
+  .inputCoupon {
+    @include flex_box_custom(flex-start, center, 0px);
+    width: 350px;
+    input {
+      padding: 10px 15px;
+      border: none;
+      border-radius: 0px;
+      border: 1px solid #ccc;
+      outline: none;
+      flex: 1;
+    }
+    button {
+      width: 40px;
+      padding: 0;
+      border: 1px solid #000;
+      border-radius: 0px;
+      height: 40px;
+    }
+  }
+  .clearBtn {
+    @include flex_box_custom(center, center, 0px);
+    button {
+      padding: 0px 20px;
+      width: 230px;
+      font-size: 12px;
+      &:hover .clearTrash  {
+        color: #fff;
+      }
+    }
+    .clearTrash {
+      color: #000;
+      font-size: 15px;
+    }
+    .contentTrashBtn {
+      @include flex_box_custom(center, center, 5px);
+    }
+  }
+}
