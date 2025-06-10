@@ -75,7 +75,7 @@ function Cart() {
             <p>${subTotal}</p>
           </div>
           <div className={boxBtn}>
-            <Button content={'VIEW CART'} />
+            <Button onClick={() => navigate('/cart')} content={'VIEW CART'} />
             <Button content={'CHECKOUT'} isPrimary={false} />
           </div>
         </div>
