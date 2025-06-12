@@ -100,6 +100,7 @@
 
     .deleteBtn {
       font-size: 20px;
+      cursor: pointer;
     }
 
     .productImage {
@@ -142,7 +143,17 @@
   }
 
   .containerSummary {
+    position: relative;
     width: 50%;
+    .loadingCart {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      top: 0;
+      @include flex_box_custom(center, center, 0px);
+      background-color: rgba(255, 255, 255, 0.5);
+    }
     .containerTotal {
       padding: 30px;
       border: 1px solid #000;
@@ -210,6 +221,19 @@
   }
 }
 
+.containerCart {
+  position: relative;
+  .loadingCart {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    @include flex_box_custom(center, center, 0px);
+    background-color: rgba(255, 255, 255, 0.5);
+  }
+}
+
 .boxCoupon {
   margin-top: 15px;
   @include flex_box_custom(space-between, center, 0px);
@@ -238,7 +262,7 @@
       padding: 0px 20px;
       width: 230px;
       font-size: 12px;
-      &:hover .clearTrash  {
+      &:hover .clearTrash {
         color: #fff;
       }
     }
@@ -249,5 +273,24 @@
     .contentTrashBtn {
       @include flex_box_custom(center, center, 5px);
     }
+  }
+}
+
+.containerEmpty {
+  .boxEmpty {
+    @include flex_box_custom(center, center, 15px);
+    flex-direction: column;
+  }
+  padding: 80px 0 140px 0;
+  .titleEmpty {
+    font-size: 25px;
+    font-weight: 400;
+  }
+  .paraEmpty {
+    font-size: 14px;
+    color: $primary_color;
+  }
+  .iconEmpty {
+    font-size: 45px;
   }
 }
