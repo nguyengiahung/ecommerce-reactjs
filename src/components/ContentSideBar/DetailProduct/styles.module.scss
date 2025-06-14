@@ -1,0 +1,89 @@
+@import '@styles/variables.module.scss';
+@import '@styles/mixin.module.scss';
+
+.container {
+  padding: 20px 25px;
+  .boxInfo {
+    @include flex_box_custom(center, flex-start, 15px);
+    margin-top: 20px;
+    flex-direction: column;
+    .infoTitle {
+      font-size: 24px;
+      color: $four_color;
+    }
+    .infoPrice {
+      font-size: 20px;
+      color: $secondary_color;
+    }
+    .infoDesc {
+      font-size: 16px;
+      color: $third_color;
+      line-height: 25px;
+    }
+    .boxSize {
+      @include flex_box_custom(center, center, 15px);
+      margin-top: 10px;
+      .size {
+        color: $third_color;
+        font-size: 12px;
+        border: 1px solid #ccc;
+        width: 25px;
+        cursor: pointer;
+        height: 25px;
+        @include flex_box_custom(center, center, 15px);
+        transition: border 0.3s linear;
+        &:hover {
+          border: 1px solid $primary_color;
+        }
+      }
+      .isActive {
+        border: 1px solid $primary_color;
+      }
+    }
+    .clear {
+      font-size: 14px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+  }
+  .boxAddToCart {
+    margin-top: 15px;
+    @include flex_box_custom(flex-start, center, 15px);
+    .btnAddCart {
+      @include flex_box_custom(center, center, 5px);
+      font-size: 12px;
+      width: 190px;
+    }
+  }
+  .btnBuyNow {
+    @include flex_box_custom(center, center, 5px);
+    font-size: 12px;
+    width: 100%;
+  }
+  .boxOr {
+    @include flex_box_custom(center, center, 5px);
+    margin: 15px 0;
+    .line {
+      width: 100%;
+      height: 1px;
+      background-color: #e1e1e1;
+    }
+  }
+  .boxBtnBuy {
+    width: 100%;
+    button {
+      width: 100%;
+    }
+  }
+  .boxAction {
+    @include flex_box_custom(flex-start, center, 15px);
+    margin-top: 15px;
+  }
+  .boxFooter {
+    margin-top: 12px;
+
+    span {
+      color: $secondary_color;
+    }
+  }
+}

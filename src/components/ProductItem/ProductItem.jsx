@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
 import styles from './styles.module.scss';
-import heartIcon from '@icons/svgs/heartIcon.svg';
-import bagIcon from '@icons/svgs/bagIcon.svg';
-import eyeIcon from '@icons/svgs/eyeIcon.svg';
-import reloadIcon from '@icons/svgs/reloadIcon.svg';
+import { PiHandbagSimple } from 'react-icons/pi';
+import { CiHeart } from 'react-icons/ci';
+import { PiEye } from 'react-icons/pi';
+import { GrRotateLeft } from 'react-icons/gr';
 import Button from '@components/Button/Button';
 import classNames from 'classnames';
 import { OurShopContext } from '@/contexts/OurShopProvider';
@@ -25,8 +25,13 @@ function ProductItem({
   const [isShowGrid, setIsShowGrid] = useState(ourShopStore?.isShowGrid);
   const [sizeChoose, setSizeChoose] = useState('');
   const userId = Cookies.get('userId');
-  const { setIsOpen, setType, handleGetListProductsCart } =
-    useContext(SidebarContext);
+  const {
+    setIsOpen,
+    setType,
+    handleGetListProductsCar,
+    setDetailProduct,
+    detailProduct
+  } = useContext(SidebarContext);
   const { toast } = useContext(ToastContext);
   const [isLoading, setIsLoading] = useState(false);
   const {
@@ -48,7 +53,8 @@ function ProductItem({
     boxContentList,
     largeImg,
     isActiveSize,
-    btnClear
+    btnClear,
+    icon
   } = styles;
 
   useEffect(() => {
@@ -58,6 +64,12 @@ function ProductItem({
       setIsShowGrid(ourShopStore?.isShowGrid);
     }
   }, [isHomePage, ourShopStore?.isShowGrid]);
+
+  const handleShowDetailProductSideBar = () => {
+    setIsOpen(true);
+    setType('detail');
+    setDetailProduct(details);
+  };
 
   const handleChooseSize = (size) => {
     setSizeChoose(size);
@@ -115,16 +127,19 @@ function ProductItem({
 
         <div className={showFuncWhenHover}>
           <div className={boxIcon}>
-            <img src={bagIcon} alt='' />
+            <PiHandbagSimple className={icon} />
           </div>
           <div className={boxIcon}>
-            <img src={heartIcon} alt='' />
+            <CiHeart className={icon} />
           </div>
           <div className={boxIcon}>
-            <img src={reloadIcon} alt='' />
+            <GrRotateLeft className={icon} />
           </div>
-          <div className={boxIcon}>
-            <img src={eyeIcon} alt='' />
+          <div
+            className={boxIcon}
+            onClick={() => handleShowDetailProductSideBar()}
+          >
+            <PiEye className={icon} />
           </div>
         </div>
       </div>

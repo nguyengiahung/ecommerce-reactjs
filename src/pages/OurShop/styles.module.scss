@@ -43,12 +43,13 @@
   .containerShow {
     @include flex_box_custom(center, center, 10px);
   }
-  .selectBox {
-    padding: 8px 14px;
-    color: $secondary_color;
-    font-size: 14px;
-    border: 1px solid #ccc;
-  }
+}
+
+.selectBox {
+  padding: 8px 14px;
+  color: $secondary_color;
+  font-size: 14px;
+  border: 1px solid #ccc;
 }
 
 .containerProduct {
