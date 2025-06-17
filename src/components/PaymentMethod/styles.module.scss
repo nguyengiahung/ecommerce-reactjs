@@ -1,0 +1,32 @@
+@import '@styles/mixin.module.scss';
+@import '@styles/variables.module.scss';
+
+.containerMethods {
+  position: relative;
+  margin-top: 40px;
+  border: 1px solid #eee;
+  padding: 20px;
+  .titleMethods {
+    position: absolute;
+    left: 50%;
+    top: -10px;
+    width: 500px;
+    text-align: center;
+    transform: translate(-50%, 0);
+    background-color: #fff;
+    z-index: 99;
+    span {
+      color: red;
+    }
+  }
+  .boxLogo {
+    @include flex_box_custom(center, center, 20px);
+
+    img {
+      border: 1px solid #ccc;
+      width: 50px;
+      height: 30px;
+      object-fit: contain;
+    }
+  }
+}

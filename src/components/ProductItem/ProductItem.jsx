@@ -12,6 +12,7 @@ import { SidebarContext } from '@/contexts/SidebarProvider';
 import { ToastContext } from '@/contexts/ToastProvider';
 import { addProductToCart } from '@/apis/cartService';
 import LoadingTextCommon from '@components/LoadingTextCommon/LoadingTextCommon';
+import { useNavigate } from 'react-router-dom';
 
 function ProductItem({
   src,
@@ -25,6 +26,7 @@ function ProductItem({
   const [isShowGrid, setIsShowGrid] = useState(ourShopStore?.isShowGrid);
   const [sizeChoose, setSizeChoose] = useState('');
   const userId = Cookies.get('userId');
+  const navigate = useNavigate('');
   const {
     setIsOpen,
     setType,
@@ -71,6 +73,11 @@ function ProductItem({
     setDetailProduct(details);
   };
 
+  const handleNavigateToDetail = () => {
+    const path = `/product/${details._id}`;
+    navigate(path);
+  };
+
   const handleChooseSize = (size) => {
     setSizeChoose(size);
   };
@@ -114,13 +121,14 @@ function ProductItem({
 
   return (
     <div
-      style={{ marginBottom: '10px' }}
+      style={{ marginBottom: '10px', cursor: 'pointer' }}
       className={isShowGrid ? '' : containerItem}
     >
       <div
         className={classNames(boxImg, {
           [largeImg]: !isShowGrid
         })}
+        onClick={handleNavigateToDetail}
       >
         <img src={src} alt='' />
         <img src={prevSrc} alt='' className={showImage} />
