@@ -1,13 +1,17 @@
 import Footer from '@components/Footer/Footer';
 import Header from '@components/Header/Header';
 import MainLayout from '@components/Layout/Layout';
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './styles.module.scss';
 import Button from '@components/Button/Button';
 import { IoCartOutline } from 'react-icons/io5';
 import { TfiReload } from 'react-icons/tfi';
 import { CiHeart } from 'react-icons/ci';
 import PaymentMethod from '@components/PaymentMethod/PaymentMethod';
+import AccordionMenu from '@components/AccordionMenu/AccordionMenu';
+import InformationProduct from '@/pages/DetailProduct/components/Information';
+import ReviewProduct from '@/pages/DetailProduct/components/Review';
+import SliderCommon from '@components/SliderCommon/SliderCommon';
 
 function DetailProduct() {
   const {
@@ -37,14 +41,46 @@ function DetailProduct() {
     boxFunction,
     textInfo
   } = styles;
-
-  const srcMethods = [
-    'https://xstore.8theme.com/elementor2/marseille04/wp-content/themes/xstore/images/woocommerce/payment-icons/visa.jpeg',
-    'https://xstore.8theme.com/elementor2/marseille04/wp-content/themes/xstore/images/woocommerce/payment-icons/master-card.jpeg',
-    'https://xstore.8theme.com/elementor2/marseille04/wp-content/themes/xstore/images/woocommerce/payment-icons/paypal.jpeg',
-    'https://xstore.8theme.com/elementor2/marseille04/wp-content/themes/xstore/images/woocommerce/payment-icons/american-express.jpeg',
-    'https://xstore.8theme.com/elementor2/marseille04/wp-content/themes/xstore/images/woocommerce/payment-icons/bitcoin.jpeg'
+  const [menuSelected, setMenuSelected] = useState(1);
+  const tempDataSlider = [
+    {
+      image:
+        'https://xstore.b-cdn.net/elementor2/marseille04/wp-content/uploads/sites/2/2022/12/Image-15.2-min.jpg',
+      name: 'Test Product 1',
+      price: '1000',
+      size: [{ name: 'L' }, { name: 'S' }]
+    },
+    {
+      image:
+        'https://xstore.b-cdn.net/elementor2/marseille04/wp-content/uploads/sites/2/2022/12/Image-15.2-min.jpg',
+      name: 'Test Product 1',
+      price: '1000',
+      size: [{ name: 'L' }, { name: 'S' }]
+    },
+    {
+      image:
+        'https://xstore.b-cdn.net/elementor2/marseille04/wp-content/uploads/sites/2/2022/12/Image-15.2-min.jpg',
+      name: 'Test Product 1',
+      price: '1000',
+      size: [{ name: 'L' }, { name: 'S' }]
+    }
   ];
+  const dataAccordionMenu = [
+    {
+      id: 1,
+      titleMenu: 'ADDITIONAL INFORMATION',
+      content: <InformationProduct />
+    },
+    {
+      id: 2,
+      titleMenu: 'REVIEW (0)',
+      content: <ReviewProduct />
+    }
+  ];
+
+  const handleSetMenuSelected = (id) => {
+    setMenuSelected(id);
+  };
 
   return (
     <div>
@@ -147,8 +183,25 @@ function DetailProduct() {
                     Category: <span className={textInfo}>Men</span>
                   </div>
                 </div>
+                <div>
+                  {/* <AccordionMenu /> */}
+                  {dataAccordionMenu.map((item, index) => (
+                    <AccordionMenu
+                      titleMenu={item.titleMenu}
+                      contentJsx={item.content}
+                      key={index}
+                      onClick={() => handleSetMenuSelected(item.id)}
+                      isSelected={menuSelected === item.id}
+                    />
+                  ))}
+                </div>
               </div>
             </div>
+          </div>
+          <div>
+            More actions
+            <h2>Related products</h2>
+            <SliderCommon data={tempDataSlider} isProductItem showItem={4} />
           </div>
         </MainLayout>
       </div>

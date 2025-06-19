@@ -20,7 +20,8 @@ function ProductItem({
   name,
   price,
   details,
-  isHomePage = true
+  isHomePage = true,
+  slideItem = false
 }) {
   const ourShopStore = useContext(OurShopContext);
   const [isShowGrid, setIsShowGrid] = useState(ourShopStore?.isShowGrid);
@@ -59,6 +60,10 @@ function ProductItem({
     icon
   } = styles;
 
+  useEffect(() => {
+    if (slideItem) setIsShowGrid(true);
+  }, [slideItem]);
+  
   useEffect(() => {
     if (isHomePage) {
       setIsShowGrid(true);
