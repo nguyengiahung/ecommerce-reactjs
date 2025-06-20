@@ -12,7 +12,7 @@ function App() {
         <SidebarProvider>
           <BrowserRouter>
             <Sidebar />
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense>
               <Routes>
                 {routers &&
                   routers.map((item, index) => {

@@ -13,9 +13,10 @@ import InformationProduct from '@/pages/DetailProduct/components/Information';
 import ReviewProduct from '@/pages/DetailProduct/components/Review';
 import SliderCommon from '@components/SliderCommon/SliderCommon';
 import ReactImageMagnifier from 'simple-image-magnifier/react';
-import { SidebarContext } from '@/contexts/SidebarProvider';
 import { getProductById } from '@/apis/productsService';
 import classNames from 'classnames';
+import { useParams } from 'react-router-dom';
+import LoadingTextCommon from '@components/LoadingTextCommon/LoadingTextCommon';
 function DetailProduct() {
   const {
     container,
@@ -28,7 +29,6 @@ function DetailProduct() {
     title,
     boxImage,
     boxContent,
-    image,
     clear,
     sizeItem,
     boxOr,
@@ -44,24 +44,34 @@ function DetailProduct() {
     boxFunction,
     textInfo,
     active,
-    activeDisabledBtn
+    activeDisabledBtn,
+    loading
   } = styles;
-  const { detailProduct, setDetailProduct } = useContext(SidebarContext);
   const [menuSelected, setMenuSelected] = useState(1);
   const [sizeSelected, setSizeSelected] = useState('');
   const [quantity, setQuantity] = useState(1);
-  console.log(detailProduct);
+  const [data, setData] = useState();
+  const [isLoading, setIsLoading] = useState(false);
   const INCREMENT = 'increment';
   const DECREMENT = 'decrement';
-  // useEffect(() => {
-  //   getProductById(detailProduct._id)
-  //     .then((res) => {
-  //       console.log(res);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }, [detailProduct._id]);
+  const param = useParams();
+  const fetchDataDetail = async (id) => {
+    setIsLoading(true);
+    try {
+      const data = await getProductById(id);
+      setData(data);
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (param.id) {
+      fetchDataDetail(param.id);
+    }
+  }, [param.id]);
 
   const tempDataSlider = [
     {
@@ -84,16 +94,6 @@ function DetailProduct() {
       name: 'Test Product 1',
       price: '1000',
       size: [{ name: 'L' }, { name: 'S' }]
-    }
-  ];
-  const tempDataSize = [
-    {
-      name: 'S',
-      amount: '1000'
-    },
-    {
-      name: 'M',
-      amount: '1000'
     }
   ];
   const dataAccordionMenu = [
@@ -144,7 +144,8 @@ function DetailProduct() {
     //     break;
     //   default:
     //     break;
-    // }  
+    // }
+
     if (quantity < 1) return;
     setQuantity((prev) =>
       action === INCREMENT ? (prev += 1) : quantity === 1 ? 1 : (prev -= 1)
@@ -156,124 +157,125 @@ function DetailProduct() {
       <Header />
       <div className={container}>
         <MainLayout>
-          <div className={navigateSection}>
-            <div>Home `{'>'}` Men</div>
-            <div>`{'<'}`Return to previous page</div>
-          </div>
-          <div className={contentSection}>
-            <div className={boxImage}>
-              {detailProduct &&
-                detailProduct.images &&
-                detailProduct.images.map((src) => {
-                  return handleRenderZoomImage(src);
-                })}
+          {isLoading ? (
+            <div className={loading}>
+              <LoadingTextCommon />
             </div>
-            <div className={boxContent}>
-              <h1 className={title}>{detailProduct && detailProduct.name}</h1>
-              <p className={price}>${detailProduct && detailProduct.price}</p>
-              <p className={description}>
-                {detailProduct && detailProduct.description}
-              </p>
+          ) : (
+            <div>
+              <div className={navigateSection}>
+                <div>Home `{'>'}` Men</div>
+                <div>`{'<'}`Return to previous page</div>
+              </div>
+              <div className={contentSection}>
+                <div className={boxImage}>
+                  {data?.images.map((src) => {
+                    return handleRenderZoomImage(src);
+                  })}
+                </div>
+                <div className={boxContent}>
+                  <h1 className={title}>{data?.name}</h1>
+                  <p className={price}>${data?.price}</p>
+                  <p className={description}>{data?.description}</p>
 
-              <p className={titleSize}>Size {sizeSelected}</p>
-              <div className={boxSize}>
-                {/* {detailProduct &&
-                  detailProduct.size &&
-                  detailProduct.size.map((item, index) => {
-                    <div key={index} className={sizeItem}>
-                      {item.name}
-                    </div>;
-                  })} */}
-                {tempDataSize.map((item, index) => {
-                  return (
-                    <div
-                      key={index}
-                      className={classNames(sizeItem, {
-                        [active]: item.name === sizeSelected
-                      })}
-                      onClick={() => handleSelectedSize(item.name)}
-                    >
-                      {item.name}
-                    </div>
-                  );
-                })}
-              </div>
-              {sizeSelected && (
-                <div className={clear} onClick={handleClearSelectedSize}>
-                  Clear
-                </div>
-              )}
-              <div className={functionInfo}>
-                <div className={boxAddToCart}>
-                  <div className={adjustQuantity}>
-                    <div onClick={() => handleSetQuantity(DECREMENT)}>-</div>
-                    <div>{quantity}</div>
-                    <div onClick={() => handleSetQuantity(INCREMENT)}>+</div>
-                  </div>
-                  <div className={btnCart}>
-                    <Button
-                      customClassname={!sizeSelected && activeDisabledBtn}
-                      style={{ width: '100%' }}
-                      content={
-                        <div className={btnAddCart}>
-                          <IoCartOutline />
-                          ADD TO CART
+                  <p className={titleSize}>Size {sizeSelected}</p>
+                  <div className={boxSize}>
+                    {data?.size.map((item, index) => {
+                      return (
+                        <div
+                          key={index}
+                          className={classNames(sizeItem, {
+                            [active]: setSizeSelected === item.name
+                          })}
+                          onClick={() => handleSelectedSize(item.name)}
+                        >
+                          {item.name}
                         </div>
-                      }
-                    />
+                      );
+                    })}
                   </div>
-                </div>
-                <div className={boxOr}>
-                  <div className={line}></div>
-                  <div style={{ fontSize: '12px' }}>OR</div>
-                  <div className={line}></div>
-                </div>
-                <div className={boxBtnBuy}>
-                  <Button
-                    customClassname={!sizeSelected && activeDisabledBtn}
-                    content={
-                      <div className={btnBuyNow}>
-                        <IoCartOutline />
-                        <span>BUY NOW</span>
+                  {sizeSelected && (
+                    <div className={clear} onClick={handleClearSelectedSize}>
+                      Clear
+                    </div>
+                  )}
+                  <div className={functionInfo}>
+                    <div className={boxAddToCart}>
+                      <div className={adjustQuantity}>
+                        <div onClick={() => handleSetQuantity(DECREMENT)}>
+                          -
+                        </div>
+                        <div>{quantity}</div>
+                        <div onClick={() => handleSetQuantity(INCREMENT)}>
+                          +
+                        </div>
                       </div>
-                    }
-                  />
-                </div>
-                <div className={boxFunction}>
-                  <div>
-                    <CiHeart className={iconFunction} />
+                      <div className={btnCart}>
+                        <Button
+                          customClassname={!sizeSelected && activeDisabledBtn}
+                          style={{ width: '100%' }}
+                          content={
+                            <div className={btnAddCart}>
+                              <IoCartOutline />
+                              ADD TO CART
+                            </div>
+                          }
+                        />
+                      </div>
+                    </div>
+                    <div className={boxOr}>
+                      <div className={line}></div>
+                      <div style={{ fontSize: '12px' }}>OR</div>
+                      <div className={line}></div>
+                    </div>
+                    <div className={boxBtnBuy}>
+                      <Button
+                        customClassname={!sizeSelected && activeDisabledBtn}
+                        content={
+                          <div className={btnBuyNow}>
+                            <IoCartOutline />
+                            <span>BUY NOW</span>
+                          </div>
+                        }
+                      />
+                    </div>
+                    <div className={boxFunction}>
+                      <div>
+                        <CiHeart className={iconFunction} />
+                      </div>
+                      <div>
+                        <TfiReload className={iconFunction} />
+                      </div>
+                    </div>
+                    <PaymentMethod />
+                    <div>
+                      <div>
+                        Brand: <span className={textInfo}>Brand 01</span>
+                      </div>
+                      <div style={{ margin: '10px 0' }}>
+                        SKU: <span className={textInfo}>12345</span>
+                      </div>
+                      <div>
+                        Category: <span className={textInfo}>Men</span>
+                      </div>
+                    </div>
+                    <div>
+                      {/* <AccordionMenu /> */}
+                      {dataAccordionMenu.map((item, index) => (
+                        <AccordionMenu
+                          titleMenu={item.titleMenu}
+                          contentJsx={item.content}
+                          key={index}
+                          onClick={() => handleSetMenuSelected(item.id)}
+                          isSelected={menuSelected === item.id}
+                        />
+                      ))}
+                    </div>
                   </div>
-                  <div>
-                    <TfiReload className={iconFunction} />
-                  </div>
-                </div>
-                <PaymentMethod />
-                <div>
-                  <div>
-                    Brand: <span className={textInfo}>Brand 01</span>
-                  </div>
-                  <div style={{ margin: '10px 0' }}>
-                    SKU: <span className={textInfo}>12345</span>
-                  </div>
-                  <div>
-                    Category: <span className={textInfo}>Men</span>
-                  </div>
-                </div>
-                <div>
-                  {/* <AccordionMenu /> */}
-                  {dataAccordionMenu.map((item, index) => (
-                    <AccordionMenu
-                      titleMenu={item.titleMenu}
-                      contentJsx={item.content}
-                      key={index}
-                      onClick={() => handleSetMenuSelected(item.id)}
-                      isSelected={menuSelected === item.id}
-                    />
-                  ))}
                 </div>
               </div>
             </div>
-          </div>
+          )}
           <div>
             <h2 style={{ textAlign: 'center', fontWeight: 400 }}>
               Related products
