@@ -26,9 +26,9 @@ function Cart() {
   };
 
   const handleViewCart = () => {
-    setIsOpen(false)
-    navigate('/cart')
-  }
+    setIsOpen(false);
+    navigate('/cart');
+  };
 
   const subTotal = listProductCart.reduce((acc, item) => {
     return acc + item.total;

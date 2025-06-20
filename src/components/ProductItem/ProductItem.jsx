@@ -31,7 +31,7 @@ function ProductItem({
   const {
     setIsOpen,
     setType,
-    handleGetListProductsCar,
+    handleGetListProductsCart,
     setDetailProduct,
     detailProduct
   } = useContext(SidebarContext);
@@ -63,7 +63,7 @@ function ProductItem({
   useEffect(() => {
     if (slideItem) setIsShowGrid(true);
   }, [slideItem]);
-  
+
   useEffect(() => {
     if (isHomePage) {
       setIsShowGrid(true);
@@ -81,6 +81,7 @@ function ProductItem({
   const handleNavigateToDetail = () => {
     const path = `/product/${details._id}`;
     navigate(path);
+    setDetailProduct(details);
   };
 
   const handleChooseSize = (size) => {
