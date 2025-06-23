@@ -25,16 +25,28 @@ function Header() {
   } = styles;
   const { scrollPosition, scrollDirection } = useScrollHanding();
   const [fixedPosition, setFixedPosition] = useState(false);
-  const { setIsOpen, setType, listProductCart } = useContext(SidebarContext);
+  const {
+    setIsOpen,
+    setType,
+    listProductCart,
+    handleGetListProductsCart,
+    userId
+  } = useContext(SidebarContext);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setFixedPosition(scrollPosition > 82);
+  }, [scrollPosition]);
+
   const handleOpenSidebar = (type) => {
     setIsOpen(true);
     setType(type);
   };
 
-  useEffect(() => {
-    setFixedPosition(scrollPosition > 82);
-  }, [scrollPosition]);
+  const handleOpenCartSidebar = () => {
+    handleGetListProductsCart(userId, 'cart');
+    handleOpenSidebar('cart');
+  };
 
   return (
     <div
@@ -83,7 +95,7 @@ function Header() {
             </div>
             <div className={boxCart}>
               <CiShoppingCart
-                onClick={() => handleOpenSidebar('cart')}
+                onClick={() => handleOpenCartSidebar()}
                 className={IconRight}
               />
               <span className={quantity}>{listProductCart.length}</span>

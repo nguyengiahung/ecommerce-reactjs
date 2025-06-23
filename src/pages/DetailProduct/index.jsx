@@ -21,6 +21,7 @@ import { addProductToCartSidebar } from '@/utils/helper';
 import { SidebarContext } from '@/contexts/SidebarProvider';
 import { ToastContext } from '@/contexts/ToastProvider';
 import Cookies from 'js-cookie';
+import { addProductToCart } from '@/apis/cartService';
 function DetailProduct() {
   const {
     container,
@@ -67,6 +68,7 @@ function DetailProduct() {
   const param = useParams();
   const navigate = useNavigate();
   const [isLoadingBtn, setIsLoadingBtn] = useState(false);
+  const [isLoadingBtnBuyNow, setIsLoadingBtnBuyNow] = useState(false);
 
   const fetchDataDetail = async (id) => {
     setIsLoading(true);
@@ -137,6 +139,24 @@ function DetailProduct() {
   };
   const handleClearSelectedSize = () => {
     setSizeSelected('');
+  };
+  const handleBuyNow = () => {
+    const data = {
+      userId,
+      productId: param.id,
+      quantity,
+      size: sizeSelected
+    };
+    setIsLoadingBtnBuyNow(true);
+    addProductToCart(data)
+      .then((res) => {
+        setIsLoadingBtnBuyNow(false);
+        navigate('/cart');
+      })
+      .catch((err) => {
+        toast.error('Add to cart failed');
+        setIsLoadingBtnBuyNow(false);
+      });
   };
 
   const handleSetQuantity = (action) => {
@@ -273,12 +293,17 @@ function DetailProduct() {
                         </div>
                         <div className={boxBtnBuy}>
                           <Button
+                            onClick={handleBuyNow}
                             customClassname={!sizeSelected && activeDisabledBtn}
                             content={
-                              <div className={btnBuyNow}>
-                                <IoCartOutline />
-                                <span>BUY NOW</span>
-                              </div>
+                              isLoadingBtnBuyNow ? (
+                                <LoadingTextCommon />
+                              ) : (
+                                <div className={btnBuyNow}>
+                                  <IoCartOutline />
+                                  <span>BUY NOW</span>
+                                </div>
+                              )
                             }
                           />
                         </div>

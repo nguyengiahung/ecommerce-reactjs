@@ -37,12 +37,10 @@ export const SidebarProvider = ({ children }) => {
     setIsLoading,
     setDetailProduct,
     detailProduct,
-    userId
+    userId,
+    setListProductCart
   };
 
-  useEffect(() => {
-    handleGetListProductsCart(userId, 'cart');
-  }, []);
   return (
     <SidebarContext.Provider value={value}>{children}</SidebarContext.Provider>
   );

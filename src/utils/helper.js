@@ -1,4 +1,4 @@
-import { addProductToCart } from "@/apis/cartService";
+import { addProductToCart } from '@/apis/cartService';
 
 export const addProductToCartSidebar = (
   userId,

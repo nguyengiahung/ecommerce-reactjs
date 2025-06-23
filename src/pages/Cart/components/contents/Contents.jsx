@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import styles from '../../styles.module.scss';
 import CartTable from '@/pages/Cart/components/contents/CartTable';
 import CartSummary from '@/pages/Cart/components/contents/CartSummary';
@@ -12,6 +12,7 @@ import { ToastContext } from '@/contexts/ToastProvider';
 import { CiShoppingCart } from 'react-icons/ci';
 import Button from '@components/Button/Button';
 import { useNavigate } from 'react-router-dom';
+import { getCart } from '@/apis/cartService';
 
 function Contents() {
   const {
@@ -27,10 +28,25 @@ function Contents() {
     handleGetListProductsCart,
     isLoading,
     setIsLoading,
-    userId
+    userId,
+    setListProductCart
   } = useContext(SidebarContext);
   const { toast } = useContext(ToastContext);
   const navigate = useNavigate();
+
+  // call api getCart khi load trang
+  useEffect(() => {
+    getCart(userId)
+      .then((res) => {
+        setListProductCart(res.data.data);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        setListProductCart([]);
+        setIsLoading(false);
+      });
+  }, []);
+
   const handleChangeQuantity = (data) => {
     setIsLoading(true);
     addProductToCart(data)
