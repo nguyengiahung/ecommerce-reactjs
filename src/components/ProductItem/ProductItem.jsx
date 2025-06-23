@@ -13,6 +13,7 @@ import { ToastContext } from '@/contexts/ToastProvider';
 import { addProductToCart } from '@/apis/cartService';
 import LoadingTextCommon from '@components/LoadingTextCommon/LoadingTextCommon';
 import { useNavigate } from 'react-router-dom';
+import { addProductToCartSidebar } from '@/utils/helper';
 
 function ProductItem({
   src,
@@ -28,13 +29,8 @@ function ProductItem({
   const [sizeChoose, setSizeChoose] = useState('');
   const userId = Cookies.get('userId');
   const navigate = useNavigate('');
-  const {
-    setIsOpen,
-    setType,
-    handleGetListProductsCart,
-    setDetailProduct,
-    detailProduct
-  } = useContext(SidebarContext);
+  const { setIsOpen, setType, handleGetListProductsCart, setDetailProduct } =
+    useContext(SidebarContext);
   const { toast } = useContext(ToastContext);
   const [isLoading, setIsLoading] = useState(false);
   const {
@@ -61,17 +57,15 @@ function ProductItem({
   } = styles;
 
   useEffect(() => {
-    if (slideItem) setIsShowGrid(true);
-  }, [slideItem]);
-
-  useEffect(() => {
     if (isHomePage) {
       setIsShowGrid(true);
     } else {
       setIsShowGrid(ourShopStore?.isShowGrid);
     }
   }, [isHomePage, ourShopStore?.isShowGrid]);
-
+  useEffect(() => {
+    if (slideItem) setIsShowGrid(true);
+  }, [slideItem]);
   const handleShowDetailProductSideBar = () => {
     setIsOpen(true);
     setType('detail');
@@ -93,36 +87,17 @@ function ProductItem({
   };
 
   const handleAddToCart = () => {
-    if (!userId) {
-      setIsOpen(true);
-      setType('login');
-      toast.warning('Please login to add cart!');
-      return;
-    }
-    if (!sizeChoose) {
-      toast.warning('Please choose size!');
-      return;
-    }
-    const data = {
+    addProductToCartSidebar(
       userId,
-      productId: details._id,
-      quantity: 1,
-      size: sizeChoose
-    };
-
-    setIsLoading(true);
-    addProductToCart(data)
-      .then((res) => {
-        setIsOpen(true);
-        setType('cart');
-        toast.success('Add to cart successfully!');
-        setIsLoading(false);
-        handleGetListProductsCart(userId, 'cart');
-      })
-      .catch((err) => {
-        toast.error('Add to cart failed');
-        setIsLoading(false);
-      });
+      setIsOpen,
+      setType,
+      toast,
+      sizeChoose,
+      details._id,
+      1,
+      setIsLoading,
+      handleGetListProductsCart
+    );
   };
 
   return (

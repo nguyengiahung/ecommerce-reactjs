@@ -86,7 +86,7 @@ function DetailProduct() {
   return (
     <div className={container}>
       <div>
-        <SliderCommon data={detailProduct.images} />
+        <SliderCommon data={detailProduct && detailProduct.images} />
       </div>
 
       <div className={boxInfo}>

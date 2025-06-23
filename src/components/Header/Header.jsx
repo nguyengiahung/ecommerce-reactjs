@@ -9,6 +9,7 @@ import classNames from 'classnames';
 import { SidebarContext } from '@/contexts/SidebarProvider';
 import { CiHeart, CiShoppingCart } from 'react-icons/ci';
 import { TfiReload } from 'react-icons/tfi';
+import { useNavigate } from 'react-router-dom';
 function Header() {
   const {
     containerHeader,
@@ -25,6 +26,7 @@ function Header() {
   const { scrollPosition, scrollDirection } = useScrollHanding();
   const [fixedPosition, setFixedPosition] = useState(false);
   const { setIsOpen, setType, listProductCart } = useContext(SidebarContext);
+  const navigate = useNavigate();
   const handleOpenSidebar = (type) => {
     setIsOpen(true);
     setType(type);
@@ -55,7 +57,7 @@ function Header() {
               })}
           </div>
         </div>
-        <div>
+        <div onClick={() => navigate('/')} style={{ cursor: 'pointer' }}>
           <img src={Logo} alt='' style={{ width: '153px', height: '53px' }} />
         </div>
         <div className={containerBox}>

@@ -5,6 +5,7 @@
   padding: 93px 0 50px;
   .navigateSection {
     @include flex_box_custom(space-between, center, 0px);
+    margin-bottom: 20px;
   }
   .contentSection {
     margin: 15px 0 120px;
@@ -254,8 +255,13 @@
 }
 
 .loading {
-  height: 1000px;
-    @include flex_box_custom(center, center, 0px);
-    background-color: #fffafa;
-  
+  height: 900px;
+  @include flex_box_custom(center, center, 0px);
+  background-color: #fffafa;
+}
+
+.emptyData {
+  height: 700px;
+  @include flex_box_custom(center, center, 0px);
+  flex-direction: column;
 }

@@ -132,6 +132,7 @@
 
 .containerItem {
   @include flex_box_custom(flex-start, center, 20px);
+  // flex-direction: column;
   margin-top: 20px;
   .largeImg {
     width: 430px;
