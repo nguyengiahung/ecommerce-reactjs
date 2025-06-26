@@ -10,6 +10,7 @@ import { SidebarContext } from '@/contexts/SidebarProvider';
 import { CiHeart, CiShoppingCart } from 'react-icons/ci';
 import { TfiReload } from 'react-icons/tfi';
 import { useNavigate } from 'react-router-dom';
+import { StoreContext } from '@/contexts/storeProvider';
 function Header() {
   const {
     containerHeader,
@@ -25,6 +26,7 @@ function Header() {
   } = styles;
   const { scrollPosition, scrollDirection } = useScrollHanding();
   const [fixedPosition, setFixedPosition] = useState(false);
+  const {userInfo} = useContext(StoreContext);
   const {
     setIsOpen,
     setType,
@@ -42,6 +44,12 @@ function Header() {
     setIsOpen(true);
     setType(type);
   };
+
+  const totalItemCart = listProductCart.length
+    ? listProductCart.reduce((acc, item) => {
+        return acc + item.quantity;
+      }, 0)
+    : 0;
 
   const handleOpenCartSidebar = () => {
     handleGetListProductsCart(userId, 'cart');
@@ -98,7 +106,7 @@ function Header() {
                 onClick={() => handleOpenCartSidebar()}
                 className={IconRight}
               />
-              <span className={quantity}>{listProductCart.length}</span>
+              <span className={quantity}>{totalItemCart || userInfo?.amountCart}</span>
             </div>
           </div>
         </div>

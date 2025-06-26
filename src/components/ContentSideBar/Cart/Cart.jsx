@@ -48,7 +48,10 @@ function Cart() {
             />
           </div>
         ) : (
-          <div className={containerListProductCart}>
+          <div
+            className={containerListProductCart}
+            style={{ height: 'calc(100vh - 250px)', overflow: 'auto' }}
+          >
             {isLoading ? (
               <LoadingTextCommon />
             ) : (
